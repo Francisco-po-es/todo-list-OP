@@ -1,6 +1,5 @@
 import { PROJECT } from './project.js';
 import {TODO} from './todo.js';
-export {PROJECT} from './project.js'
 
 let genericTODO = new TODO('A party', 'Party at home', '01-01-2027', 2);
 
@@ -10,14 +9,16 @@ genericTODO.setDescription('Party at his house');
 
 console.log(genericTODO);
 
-let genericPROJECT = new PROJECT();
-let anotherPROJECT = new PROJECT('PROJECT 1')
+let defaultPROJECT = new PROJECT('Default');
 
-genericPROJECT.addTodo(genericTODO);
-anotherPROJECT.addTodo(genericTODO);
-genericPROJECT.removeTodo(genericTODO.id);
-genericPROJECT.setName('PROJECT 0.5');
+function addressProject(todo, project) {
+    if (!project) {
+        defaultPROJECT.addTodo(todo);
+    } else {
+        project.addTodo(todo);
+    }
+}
 
-console.log(genericPROJECT);
-console.log(anotherPROJECT);
-console.log(anotherPROJECT.getTodo(genericTODO.id))
+addressProject(genericTODO);
+
+console.log(defaultPROJECT);
