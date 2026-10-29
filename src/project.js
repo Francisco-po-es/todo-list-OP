@@ -1,6 +1,6 @@
 export class PROJECT {
-    constructor(name = 'No name') {
-        this.name = name;
+    constructor(name) {
+        this.setName(name);
         this.todos = [];
         this.id = crypto.randomUUID();
     }
@@ -18,7 +18,11 @@ export class PROJECT {
     }
 
     setName(newName) {
-        this.name = newName;
+        if (this.name = '') {
+            throw new Error('You have to write a proper name for your project.')
+        } else {
+            this.name = newName;
+        }
     }
 
     getTodo(id) {
