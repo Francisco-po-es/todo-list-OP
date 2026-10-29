@@ -6,27 +6,28 @@
     <title>To do List</title>
 </head>
 <body>
-    <aside id="projects-sidebar">
-        <button id="btnCreateProject">Create Project</button>
-        <dialog>
+    <aside id="projectsSidebar">
+        <button id="addProject">Add Project</button>
+        <dialog id="dialogProject">
             <form action="./main.js" method="dialog">
-                <label for="title"></label>
-                <input type="text" name="title" id="inputTitlePJ">
-                <button id="btnAddProject">Add Project</button>
-                <button id="btnCancelProject" type="button">Cancel Project</button>
+                <label for="title">What name would you like for this project?</label>
+                <input required type="text" name="title" id="inputTitlePJ">
+                <button id="createProject">Create Project</button>
+                <button id="cancelProject" class="cancelBtn" type="button">Cancel Project</button>
             </form>
         </dialog>
     </aside>
-    <div id="todos-container">
-        <button id="btnCreateTodo"></button>
-        <dialog>
+    <div id="todosContainer">
+        <button id="addTodo">Add Todo</button>
+        <dialog id="dialogTodo">
             <form action="./main.js" method="dialog">
-                <label for="title"></label>
+                <label for="title">Title</label>
                 <input type="text" id="inputTitleTD" name="title">
-                <label for="description"></label>s
+                <label for="description">Description</label>
                 <input type="text" id="inputDesc" name="description">
-                <label for="date"></label>
+                <label for="date">Due Date</label>
                 <input type="date" id="inputDate" name="date">
+                <select id="selectProject" name="project"></select>
                 <fieldset>
                 <legend>Select a priority:</legend>
                     <div>
@@ -42,8 +43,8 @@
                         <label for="3">High</label>
                     </div>
                 </fieldset>
-                <button id="btnAddTodo">Add Todo</button>
-                <button id="btnCancelTodo" type="button">Cancel Todo</button>
+                <button id="createTodo">Create Todo</button>
+                <button id="cancelTodo" type="button" class="cancelBtn" >Cancel Todo</button>
             </form>
         </dialog>
     </div>
