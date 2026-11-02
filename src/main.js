@@ -1,25 +1,10 @@
 import { PROJECT } from './project.js';
 import {TODO} from './todo.js';
+import { addressProject, getProject, addSelect, getPriority } from './tools.js';
 
-let genericTODO = new TODO('A party', 'Party at home', '2027-01-28', 2);
 let defaultPROJECT = new PROJECT('Default');
 const projects = [defaultPROJECT];
 
-function addressProject(todo, project) {
-    if (!project) {
-        defaultPROJECT.addTodo(todo);
-    } else {
-        project.addTodo(todo);
-    }
-}
-
-function getProject(name, projects) {
-     for (let i = 0; i < projects.length; i++) {
-        if (name === projects[i].name) {
-            return projects[i];
-        }
-     }
-}
 
 let todoDialog = document.getElementById('dialogTodo');
 let projectDialog = document.getElementById('dialogProject');
@@ -41,14 +26,6 @@ let priorityTodo = document.getElementsByName('priority');
 let addTodo = document.getElementById('addTodo');
 let cancelTodo = document.getElementById('cancelTodo');
 
-function addSelect(list) {
-    for (let i = 0; i < list.length; i++) {
-        let option = document.createElement('option');
-        option.textContent = list[i].name;
-        option.value = list[i].name;
-        selectTodo.appendChild(option);
-    }
-}
 
 addSelect(projects);
 
@@ -80,13 +57,7 @@ addSelect(projects);
 
     todoForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        function getPriority(priorityList) {
-            for (let i = 0; i < priorityList.length; i++) {
-                if (priorityList[i].checked) {
-                    return parseInt(priorityList[i].value);
-                }
-            }
-        }
+        
         addressProject(new TODO(titleTodo.value, descTodo.value, dateTodo.value, getPriority(priorityTodo)), getProject(selectTodo.value, projects))
         todoForm.reset();
         todoDialog.close();
