@@ -2,7 +2,7 @@ import { PROJECT } from './project.js';
 import {TODO} from './todo.js';
 import { addressProject, getProject, addSelect, getPriority } from './tools.js';
 
-let defaultProject = new PROJECT('Default')
+let defaultProject = new PROJECT('Default');
 const projects = [defaultProject];
 
 
@@ -54,6 +54,7 @@ let cancelTodo = document.getElementById('cancelTodo');
         e.preventDefault();
 
         if (!(projects.find((project) => project.name === 'Default'))) {
+            defaultProject = new PROJECT('Default')
             projects.push(defaultProject);
         }
         addressProject(new TODO(titleTodo.value, descTodo.value, dateTodo.value, getPriority(priorityTodo)), getProject(selectTodo.value, projects), defaultProject)
