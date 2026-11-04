@@ -1,7 +1,7 @@
 // Adds a Todo to their project. If project is empty, then Todo object goes to Default project
-export function addressProject(todo, project) {
+export function addressProject(todo, project, defaultObject) {
     if (!project) {
-        defaultPROJECT.addTodo(todo);
+            defaultObject.addTodo(todo);
     } else {
         project.addTodo(todo);
     }
@@ -17,12 +17,13 @@ export function getProject(name, projects) {
 }
 
 // Adds the Project to the select list in Todo form
-export function addSelect(list) {
+export function addSelect(list, select) {
+    select.innerHTML = '<option value="">-- Elige un proyecto --</option>';
     for (let i = 0; i < list.length; i++) {
         let option = document.createElement('option');
         option.textContent = list[i].name;
         option.value = list[i].name;
-        selectTodo.appendChild(option);
+        select.appendChild(option);
     }
 }
 

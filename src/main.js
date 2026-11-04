@@ -2,8 +2,8 @@ import { PROJECT } from './project.js';
 import {TODO} from './todo.js';
 import { addressProject, getProject, addSelect, getPriority } from './tools.js';
 
-let defaultPROJECT = new PROJECT('Default');
-const projects = [defaultPROJECT];
+let defaultProject = new PROJECT('Default')
+const projects = [defaultProject];
 
 
 let todoDialog = document.getElementById('dialogTodo');
@@ -26,16 +26,12 @@ let priorityTodo = document.getElementsByName('priority');
 let addTodo = document.getElementById('addTodo');
 let cancelTodo = document.getElementById('cancelTodo');
 
-
-addSelect(projects);
-
 (function () {
     addProject.addEventListener('click', () => {
         projectDialog.showModal();
     })
     addTodo.addEventListener('click', () => {
-        selectTodo.innerHTML = "";
-        addSelect(projects);
+        addSelect(projects, selectTodo);
         todoDialog.showModal();
     })
 
@@ -49,7 +45,6 @@ addSelect(projects);
     projectForm.addEventListener('submit', (e) => {
         e.preventDefault();
         projects.push(new PROJECT(titleProject.value));
-        
         console.log(projects);
         titleProject.value = '';
         projectDialog.close();
@@ -57,8 +52,12 @@ addSelect(projects);
 
     todoForm.addEventListener('submit', (e) => {
         e.preventDefault();
+
+        if (!(projects.find((project) => project.name === 'Default'))) {
+            projects.push(defaultProject);
+        }
+        addressProject(new TODO(titleTodo.value, descTodo.value, dateTodo.value, getPriority(priorityTodo)), getProject(selectTodo.value, projects), defaultProject)
         
-        addressProject(new TODO(titleTodo.value, descTodo.value, dateTodo.value, getPriority(priorityTodo)), getProject(selectTodo.value, projects))
         todoForm.reset();
         todoDialog.close();
     })
