@@ -7,11 +7,18 @@ let defaultProject = new PROJECT('Default');
 const projects = [defaultProject];
 
 let todosContainer = document.getElementById('todosContainer');
+let listProjects = document.getElementById('displayedProjects')
 
-if (projects.length >= 2) {
-
+if (projects.length >= 1) {
+    projects.forEach((project) => displayProjects(project))
 } else {
     todosContainer.innerHTML = `There's no projects in here.`
+}
+
+function displayProjects(project) {
+    let newProject = document.createElement('ul');
+    newProject.textContent = `${project.name}`;
+    listProjects.appendChild(newProject);
 }
 
 let todoDialog = document.getElementById('dialogTodo');
