@@ -41,6 +41,7 @@ function displayProjects(project) {
 
 function addProjectstoAside(array) {
     if (array.length >= 1) {
+        listProjects.innerHTML = '';
         array.forEach((project) => displayProjects(project))
     } else {
         todosContainer.innerHTML = `There's no projects in here.`
