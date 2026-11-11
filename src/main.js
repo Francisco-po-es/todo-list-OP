@@ -1,3 +1,4 @@
+import "./styles.css";
 import { PROJECT } from './project.js';
 import {TODO} from './todo.js';
 import { addressProject, getProject, addSelect, getPriority } from './tools.js';
@@ -58,7 +59,7 @@ let cancelTodo = document.getElementById('cancelTodo');
             projects.push(defaultProject);
         }
         addressProject(new TODO(titleTodo.value, descTodo.value, dateTodo.value, getPriority(priorityTodo)), getProject(selectTodo.value, projects), defaultProject)
-        
+        console.log(projects);
         todoForm.reset();
         todoDialog.close();
     })

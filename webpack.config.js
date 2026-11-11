@@ -12,11 +12,21 @@ export default {
   },
   devtool: "eval-source-map",
   devServer: {
-    watchFiles: ["./src/template.html"],
+    static: "./dist",
+    hot: true,
+    watchFiles: ["./src/**/*"],
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: "./src/template.html",
     }),
   ],
+  module: {
+    rules: [
+      {
+        test: /\.css$/i,
+        use: ["style-loader", "css-loader"],
+      },
+    ],
+  },
 };
