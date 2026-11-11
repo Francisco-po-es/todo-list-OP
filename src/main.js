@@ -9,17 +9,8 @@ const projects = [defaultProject];
 let todosContainer = document.getElementById('todosContainer');
 let listProjects = document.getElementById('displayedProjects')
 
-if (projects.length >= 1) {
-    projects.forEach((project) => displayProjects(project))
-} else {
-    todosContainer.innerHTML = `There's no projects in here.`
-}
 
-function displayProjects(project) {
-    let newProject = document.createElement('ul');
-    newProject.textContent = `${project.name}`;
-    listProjects.appendChild(newProject);
-}
+
 
 let todoDialog = document.getElementById('dialogTodo');
 let projectDialog = document.getElementById('dialogProject');
@@ -41,6 +32,24 @@ let priorityTodo = document.getElementsByName('priority');
 let addTodo = document.getElementById('addTodo');
 let cancelTodo = document.getElementById('cancelTodo');
 
+function displayProjects(project) {
+    let newProject = document.createElement('ul');
+    newProject.id = 'project';
+    newProject.textContent = `${project.name}`;
+    listProjects.appendChild(newProject);
+}
+
+function addProjectstoAside(array) {
+    if (array.length >= 1) {
+        array.forEach((project) => displayProjects(project))
+    } else {
+        todosContainer.innerHTML = `There's no projects in here.`
+    }
+}
+
+
+
+
 function main() {
     addProject.addEventListener('click', () => {
         projectDialog.showModal();
@@ -60,7 +69,7 @@ function main() {
     projectForm.addEventListener('submit', (e) => {
         e.preventDefault();
         projects.push(new PROJECT(titleProject.value));
-        console.log(projects);
+        addProjectstoAside(projects);
         titleProject.value = '';
         projectDialog.close();
     })
@@ -78,3 +87,5 @@ function main() {
         todoDialog.close();
     })
 }; 
+
+main();

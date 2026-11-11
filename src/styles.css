@@ -51,7 +51,11 @@ button:hover {
 }
 
 /* PROJECTS */
-.project {
+#displayedProjects {
+    list-style: none;
+}
+
+#project {
     padding: 12px;
     margin-bottom: 8px;
     background-color: white;
@@ -59,7 +63,7 @@ button:hover {
     cursor: pointer;
 }
 
-.project:hover {
+#project:hover {
     background-color: #ddd;
 }
 
