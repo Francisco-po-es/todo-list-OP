@@ -6,6 +6,13 @@ import { addressProject, getProject, addSelect, getPriority } from './tools.js';
 let defaultProject = new PROJECT('Default');
 const projects = [defaultProject];
 
+let todosContainer = document.getElementById('todosContainer');
+
+if (projects.length >= 2) {
+
+} else {
+    todosContainer.innerHTML = `There's no projects in here.`
+}
 
 let todoDialog = document.getElementById('dialogTodo');
 let projectDialog = document.getElementById('dialogProject');
@@ -27,7 +34,7 @@ let priorityTodo = document.getElementsByName('priority');
 let addTodo = document.getElementById('addTodo');
 let cancelTodo = document.getElementById('cancelTodo');
 
-(function () {
+function main() {
     addProject.addEventListener('click', () => {
         projectDialog.showModal();
     })
@@ -63,4 +70,4 @@ let cancelTodo = document.getElementById('cancelTodo');
         todoForm.reset();
         todoDialog.close();
     })
-})(); 
+}; 
