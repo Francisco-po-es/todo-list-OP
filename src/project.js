@@ -13,24 +13,24 @@ export class PROJECT {
         if (this.todos.some((anyTodo) => anyTodo.id === id)) {
             this.todos = this.todos.filter((todoToRemove) => todoToRemove.id !== id);
         } else {
-            throw new Error('Your todo doesnt exist.')
+            throw new Error('Your todo doesnt exist.');
         }
     }
 
     setName(newName) {
-        if (this.name = '') {
-            throw new Error('You have to write a proper name for your project.')
+        if (newName.trim() === '') {
+            throw new Error('You have to write a proper name for your project.');
         } else {
             this.name = newName;
         }
     }
 
     getTodo(id) {
-        const todoGot = this.todos.find((anyTodo) => anyTodo.id === id)
+        const todoGot = this.todos.find((anyTodo) => anyTodo.id === id);
         if (todoGot) {
             return todoGot;
         } else {
-            throw new Error('Your todo doesnt exist.')
+            throw new Error('Your todo doesnt exist.');
         }
     }
 }

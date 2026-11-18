@@ -1,16 +1,11 @@
 import "./styles.css";
 import { PROJECT } from './project.js';
-import {TODO} from './todo.js';
+import { TODO } from './todo.js';
 import { addressProject, getProject, addSelect, getPriority } from './tools.js';
+import { addProjectstoAside } from './DOM.js';
 
 let defaultProject = new PROJECT('Default');
 const projects = [defaultProject];
-
-let todosContainer = document.getElementById('todosContainer');
-let listProjects = document.getElementById('displayedProjects')
-
-
-
 
 let todoDialog = document.getElementById('dialogTodo');
 let projectDialog = document.getElementById('dialogProject');
@@ -32,40 +27,23 @@ let priorityTodo = document.getElementsByName('priority');
 let addTodo = document.getElementById('addTodo');
 let cancelTodo = document.getElementById('cancelTodo');
 
-function displayProjects(project) {
-    let newProject = document.createElement('ul');
-    newProject.id = 'project';
-    newProject.textContent = `${project.name}`;
-    listProjects.appendChild(newProject);
-}
-
-function addProjectstoAside(array) {
-    if (array.length >= 1) {
-        listProjects.innerHTML = '';
-        array.forEach((project) => displayProjects(project))
-    } else {
-        todosContainer.innerHTML = `There's no projects in here.`
-    }
-}
-
-
-
-
 function main() {
+    addProjectstoAside(projects);
+
     addProject.addEventListener('click', () => {
         projectDialog.showModal();
-    })
+    });
     addTodo.addEventListener('click', () => {
         addSelect(projects, selectTodo);
         todoDialog.showModal();
-    })
+    });
 
     cancelTodo.addEventListener('click', () => {
         todoDialog.close();
-    })
+    });
     cancelProject.addEventListener('click', () => {
         projectDialog.close();
-    })
+    });
 
     projectForm.addEventListener('submit', (e) => {
         e.preventDefault();
@@ -73,20 +51,23 @@ function main() {
         addProjectstoAside(projects);
         titleProject.value = '';
         projectDialog.close();
-    })
+    });
 
     todoForm.addEventListener('submit', (e) => {
         e.preventDefault();
 
         if (!(projects.find((project) => project.name === 'Default'))) {
-            defaultProject = new PROJECT('Default')
+            defaultProject = new PROJECT('Default');
             projects.push(defaultProject);
         }
-        addressProject(new TODO(titleTodo.value, descTodo.value, dateTodo.value, getPriority(priorityTodo)), getProject(selectTodo.value, projects), defaultProject)
-        console.log(projects);
+        addressProject(
+            new TODO(titleTodo.value, descTodo.value, dateTodo.value, getPriority(priorityTodo)),
+            getProject(selectTodo.value, projects),
+            defaultProject
+        );
         todoForm.reset();
         todoDialog.close();
-    })
-}; 
+    });
+}
 
 main();
