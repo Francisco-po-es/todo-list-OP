@@ -1,7 +1,7 @@
 import "./styles.css";
 import { PROJECT } from './project.js';
 import { TODO } from './todo.js';
-import { addressProject, getProject, addSelect, getPriority } from './tools.js';
+import { addressProject, getPriority } from './tools.js';
 import { addProjectstoAside, displayTodos } from './DOM.js';
 
 let defaultProject = new PROJECT('Default');
@@ -25,7 +25,6 @@ let titleProject = document.getElementById('inputTitlePJ');
 let titleTodo = document.getElementById('inputTitleTD');
 let descTodo = document.getElementById('inputDesc');
 let dateTodo = document.getElementById('inputDate');
-let selectTodo = document.getElementById('selectProject');
 let priorityTodo = document.getElementsByName('priority');
 
 let editTitleTodo = document.getElementById('editTitleTD');
@@ -62,8 +61,6 @@ function main() {
         projectDialog.showModal();
     });
     addTodo.addEventListener('click', () => {
-        addSelect(projects, selectTodo);
-        selectTodo.value = currentProject.name;
         todoDialog.showModal();
     });
 
@@ -95,14 +92,11 @@ function main() {
             defaultProject = new PROJECT('Default');
             projects.push(defaultProject);
         }
-        let targetProject = getProject(selectTodo.value, projects);
         addressProject(
             new TODO(titleTodo.value, descTodo.value, dateTodo.value, getPriority(priorityTodo)),
-            targetProject,
+            currentProject,
             defaultProject
         );
-        currentProject = targetProject || defaultProject;
-        addProjectstoAside(projects, currentProject, handleSelectProject);
         displayTodos(currentProject, handleEditTodo);
         todoForm.reset();
         todoDialog.close();

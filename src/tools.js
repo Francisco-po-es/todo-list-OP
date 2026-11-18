@@ -1,7 +1,7 @@
-// Adds a Todo to their project. If project is empty, then Todo object goes to Default project
+// Adds a Todo to the currently active project
 export function addressProject(todo, project, defaultObject) {
     if (!project) {
-            defaultObject.addTodo(todo);
+        defaultObject.addTodo(todo);
     } else {
         project.addTodo(todo);
     }
