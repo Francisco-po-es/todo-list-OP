@@ -28,7 +28,7 @@ export function addProjectstoAside(array, currentProject, onSelectProject) {
     }
 }
 
-export function displayTodos(project, onEditTodo) {
+export function displayTodos(project, onToggleTodo, onDeleteTodo, onEditTodo) {
     todosList.innerHTML = '';
 
     let header = document.createElement('h2');
@@ -60,8 +60,7 @@ export function displayTodos(project, onEditTodo) {
         checkbox.type = 'checkbox';
         checkbox.checked = todo.status;
         checkbox.addEventListener('change', () => {
-            todo.toggleStatus();
-            displayTodos(project, onEditTodo);
+            onToggleTodo(todo);
         });
 
         let title = document.createElement('span');
@@ -107,8 +106,7 @@ export function displayTodos(project, onEditTodo) {
         deleteBtn.textContent = 'Delete';
         deleteBtn.classList.add('deleteBtn');
         deleteBtn.addEventListener('click', () => {
-            project.removeTodo(todo.id);
-            displayTodos(project, onEditTodo);
+            onDeleteTodo(todo.id);
         });
 
         rightGroup.appendChild(date);

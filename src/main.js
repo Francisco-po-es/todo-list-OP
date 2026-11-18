@@ -2,7 +2,7 @@ import "./styles.css";
 import { PROJECT } from './project.js';
 import { TODO } from './todo.js';
 import { addressProject, getPriority } from './tools.js';
-import { addProjectstoAside, displayTodos } from './DOM.js';
+import { addProjectstoAside, displayTodos } from './dom.js';
 
 let defaultProject = new PROJECT('Default');
 const projects = [defaultProject];
@@ -36,6 +36,16 @@ let cancelEditTodo = document.getElementById('cancelEditTodo');
 let addTodo = document.getElementById('addTodo');
 let cancelTodo = document.getElementById('cancelTodo');
 
+function handleToggleTodo(todo) {
+    todo.toggleStatus();
+    renderCurrentTodos();
+}
+
+function handleDeleteTodo(todoId) {
+    currentProject.removeTodo(todoId);
+    renderCurrentTodos();
+}
+
 function handleEditTodo(todo) {
     todoBeingEdited = todo;
     editTitleTodo.value = todo.title;
@@ -47,15 +57,19 @@ function handleEditTodo(todo) {
     editTodoDialog.showModal();
 }
 
+function renderCurrentTodos() {
+    displayTodos(currentProject, handleToggleTodo, handleDeleteTodo, handleEditTodo);
+}
+
 function handleSelectProject(project) {
     currentProject = project;
     addProjectstoAside(projects, currentProject, handleSelectProject);
-    displayTodos(currentProject, handleEditTodo);
+    renderCurrentTodos();
 }
 
 function main() {
     addProjectstoAside(projects, currentProject, handleSelectProject);
-    displayTodos(currentProject, handleEditTodo);
+    renderCurrentTodos();
 
     addProject.addEventListener('click', () => {
         projectDialog.showModal();
@@ -80,7 +94,7 @@ function main() {
         projects.push(newProj);
         currentProject = newProj;
         addProjectstoAside(projects, currentProject, handleSelectProject);
-        displayTodos(currentProject, handleEditTodo);
+        renderCurrentTodos();
         titleProject.value = '';
         projectDialog.close();
     });
@@ -97,7 +111,7 @@ function main() {
             currentProject,
             defaultProject
         );
-        displayTodos(currentProject, handleEditTodo);
+        renderCurrentTodos();
         todoForm.reset();
         todoDialog.close();
     });
@@ -109,7 +123,7 @@ function main() {
             todoBeingEdited.setDescription(editDescTodo.value);
             todoBeingEdited.setDueDate(editDateTodo.value);
             todoBeingEdited.setPriority(getPriority(editPriorityTodo));
-            displayTodos(currentProject, handleEditTodo);
+            renderCurrentTodos();
             todoBeingEdited = null;
         }
         editTodoDialog.close();
