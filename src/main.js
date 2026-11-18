@@ -2,10 +2,11 @@ import "./styles.css";
 import { PROJECT } from './project.js';
 import { TODO } from './todo.js';
 import { addressProject, getProject, addSelect, getPriority } from './tools.js';
-import { addProjectstoAside } from './DOM.js';
+import { addProjectstoAside, displayTodos } from './DOM.js';
 
 let defaultProject = new PROJECT('Default');
 const projects = [defaultProject];
+let currentProject = defaultProject;
 
 let todoDialog = document.getElementById('dialogTodo');
 let projectDialog = document.getElementById('dialogProject');
@@ -27,14 +28,22 @@ let priorityTodo = document.getElementsByName('priority');
 let addTodo = document.getElementById('addTodo');
 let cancelTodo = document.getElementById('cancelTodo');
 
+function handleSelectProject(project) {
+    currentProject = project;
+    addProjectstoAside(projects, currentProject, handleSelectProject);
+    displayTodos(currentProject);
+}
+
 function main() {
-    addProjectstoAside(projects);
+    addProjectstoAside(projects, currentProject, handleSelectProject);
+    displayTodos(currentProject);
 
     addProject.addEventListener('click', () => {
         projectDialog.showModal();
     });
     addTodo.addEventListener('click', () => {
         addSelect(projects, selectTodo);
+        selectTodo.value = currentProject.name;
         todoDialog.showModal();
     });
 
@@ -47,8 +56,11 @@ function main() {
 
     projectForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        projects.push(new PROJECT(titleProject.value));
-        addProjectstoAside(projects);
+        let newProj = new PROJECT(titleProject.value);
+        projects.push(newProj);
+        currentProject = newProj;
+        addProjectstoAside(projects, currentProject, handleSelectProject);
+        displayTodos(currentProject);
         titleProject.value = '';
         projectDialog.close();
     });
@@ -60,11 +72,15 @@ function main() {
             defaultProject = new PROJECT('Default');
             projects.push(defaultProject);
         }
+        let targetProject = getProject(selectTodo.value, projects);
         addressProject(
             new TODO(titleTodo.value, descTodo.value, dateTodo.value, getPriority(priorityTodo)),
-            getProject(selectTodo.value, projects),
+            targetProject,
             defaultProject
         );
+        currentProject = targetProject || defaultProject;
+        addProjectstoAside(projects, currentProject, handleSelectProject);
+        displayTodos(currentProject);
         todoForm.reset();
         todoDialog.close();
     });
