@@ -2,7 +2,7 @@ import "./styles.css";
 import { PROJECT } from './project.js';
 import { TODO } from './todo.js';
 import { addressProject, getPriority } from './tools.js';
-import { addProjectstoAside, displayTodos } from './dom.js';
+import { addProjectstoAside, displayTodos } from './DOM.js';
 
 let defaultProject = new PROJECT('Default');
 const projects = [defaultProject];
