@@ -114,6 +114,29 @@ button:hover {
     border-left: 6px solid #f44336;
 }
 
+.todo-left,
+.todo-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.todo.completed .todo-title {
+    text-decoration: line-through;
+    color: #888;
+}
+
+.deleteBtn {
+    background-color: #ffebee;
+    border-color: #ffcdd2;
+    color: #c62828;
+    padding: 6px 10px;
+}
+
+.deleteBtn:hover {
+    background-color: #ffcdd2;
+}
+
 /* DIALOGS */
 dialog {
     margin: auto;

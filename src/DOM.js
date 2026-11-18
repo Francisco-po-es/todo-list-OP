@@ -43,21 +43,52 @@ export function displayTodos(project) {
     project.todos.forEach((todo) => {
         let todoCard = document.createElement('div');
         todoCard.classList.add('todo', `priority-${todo.priority}`);
+        if (todo.status) {
+            todoCard.classList.add('completed');
+        }
         todoCard.dataset.id = todo.id;
 
         let todoInfo = document.createElement('div');
         todoInfo.classList.add('todo-header');
 
+        let leftGroup = document.createElement('div');
+        leftGroup.classList.add('todo-left');
+
+        let checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.checked = todo.status;
+        checkbox.addEventListener('change', () => {
+            todo.toggleStatus();
+            displayTodos(project);
+        });
+
         let title = document.createElement('span');
         title.classList.add('todo-title');
         title.textContent = todo.title;
+
+        leftGroup.appendChild(checkbox);
+        leftGroup.appendChild(title);
+
+        let rightGroup = document.createElement('div');
+        rightGroup.classList.add('todo-actions');
 
         let date = document.createElement('span');
         date.classList.add('todo-date');
         date.textContent = todo.dueDate;
 
-        todoInfo.appendChild(title);
-        todoInfo.appendChild(date);
+        let deleteBtn = document.createElement('button');
+        deleteBtn.textContent = 'Delete';
+        deleteBtn.classList.add('deleteBtn');
+        deleteBtn.addEventListener('click', () => {
+            project.removeTodo(todo.id);
+            displayTodos(project);
+        });
+
+        rightGroup.appendChild(date);
+        rightGroup.appendChild(deleteBtn);
+
+        todoInfo.appendChild(leftGroup);
+        todoInfo.appendChild(rightGroup);
         todoCard.appendChild(todoInfo);
         todosList.appendChild(todoCard);
     });
