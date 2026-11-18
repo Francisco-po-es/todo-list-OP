@@ -137,6 +137,20 @@ button:hover {
     background-color: #ffcdd2;
 }
 
+.todo-details {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid #eee;
+    display: grid;
+    gap: 6px;
+    color: #555;
+    font-size: 0.95rem;
+}
+
+.hidden {
+    display: none;
+}
+
 /* DIALOGS */
 dialog {
     margin: auto;

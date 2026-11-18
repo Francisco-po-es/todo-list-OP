@@ -35,3 +35,9 @@ export function getPriority(priorityList) {
         }
     }
 }
+
+export function getPriorityName(level) {
+    if (level === 1) return 'Low';
+    if (level === 2) return 'Medium';
+    if (level === 3) return 'High';
+}

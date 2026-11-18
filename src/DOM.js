@@ -1,3 +1,5 @@
+import { getPriorityName } from './tools.js';
+
 let listProjects = document.getElementById('displayedProjects');
 let todosList = document.getElementById('todosList');
 
@@ -84,12 +86,32 @@ export function displayTodos(project) {
             displayTodos(project);
         });
 
+        let detailsDiv = document.createElement('div');
+        detailsDiv.classList.add('todo-details', 'hidden');
+
+        let descP = document.createElement('p');
+        descP.textContent = `Description: ${todo.description || 'No description provided.'}`;
+
+        let priorityP = document.createElement('p');
+        priorityP.textContent = `Priority: ${getPriorityName(todo.priority)}`;
+
+        detailsDiv.appendChild(descP);
+        detailsDiv.appendChild(priorityP);
+
+        let expandBtn = document.createElement('button');
+        expandBtn.textContent = 'Details';
+        expandBtn.addEventListener('click', () => {
+            detailsDiv.classList.toggle('hidden');
+        });
+
         rightGroup.appendChild(date);
+        rightGroup.appendChild(expandBtn);
         rightGroup.appendChild(deleteBtn);
 
         todoInfo.appendChild(leftGroup);
         todoInfo.appendChild(rightGroup);
         todoCard.appendChild(todoInfo);
+        todoCard.appendChild(detailsDiv);
         todosList.appendChild(todoCard);
     });
 }
