@@ -1,3 +1,15 @@
+import { format, parse, isValid } from 'date-fns';
+
+// Parse a date to a Date Object and then make it readable for users
+export function formatDate(date) {
+    let parsedDate = parse(date, 'yyyy-MM-dd', new Date());
+    if (!isValid(parsedDate)) {
+        throw new Error('You have to choose a proper date');
+    } else {
+        return format(parsedDate, "dd 'of' MMMM yyyy");
+    }
+}
+
 // Adds a Todo to the currently active project
 export function addressProject(todo, project, defaultObject) {
     if (!project) {

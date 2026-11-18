@@ -1,4 +1,4 @@
-import { getPriorityName } from './tools.js';
+import { formatDate, getPriorityName } from './tools.js';
 
 let listProjects = document.getElementById('displayedProjects');
 let todosList = document.getElementById('todosList');
@@ -75,7 +75,7 @@ export function displayTodos(project, onToggleTodo, onDeleteTodo, onEditTodo) {
 
         let date = document.createElement('span');
         date.classList.add('todo-date');
-        date.textContent = todo.dueDate;
+        date.textContent = formatDate(todo.dueDate);
 
         let detailsDiv = document.createElement('div');
         detailsDiv.classList.add('todo-details', 'hidden');
