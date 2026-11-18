@@ -7,12 +7,15 @@ import { addProjectstoAside, displayTodos } from './DOM.js';
 let defaultProject = new PROJECT('Default');
 const projects = [defaultProject];
 let currentProject = defaultProject;
+let todoBeingEdited = null;
 
 let todoDialog = document.getElementById('dialogTodo');
 let projectDialog = document.getElementById('dialogProject');
+let editTodoDialog = document.getElementById('dialogEditTodo');
 
 let projectForm = document.querySelector('#dialogProject > form');
 let todoForm = document.querySelector('#dialogTodo > form');
+let editTodoForm = document.querySelector('#dialogEditTodo > form');
 
 let addProject = document.getElementById('addProject');
 let cancelProject = document.getElementById('cancelProject');
@@ -25,18 +28,35 @@ let dateTodo = document.getElementById('inputDate');
 let selectTodo = document.getElementById('selectProject');
 let priorityTodo = document.getElementsByName('priority');
 
+let editTitleTodo = document.getElementById('editTitleTD');
+let editDescTodo = document.getElementById('editDesc');
+let editDateTodo = document.getElementById('editDate');
+let editPriorityTodo = document.getElementsByName('editPriority');
+let cancelEditTodo = document.getElementById('cancelEditTodo');
+
 let addTodo = document.getElementById('addTodo');
 let cancelTodo = document.getElementById('cancelTodo');
+
+function handleEditTodo(todo) {
+    todoBeingEdited = todo;
+    editTitleTodo.value = todo.title;
+    editDescTodo.value = todo.description;
+    editDateTodo.value = todo.dueDate;
+    for (let i = 0; i < editPriorityTodo.length; i++) {
+        editPriorityTodo[i].checked = parseInt(editPriorityTodo[i].value) === todo.priority;
+    }
+    editTodoDialog.showModal();
+}
 
 function handleSelectProject(project) {
     currentProject = project;
     addProjectstoAside(projects, currentProject, handleSelectProject);
-    displayTodos(currentProject);
+    displayTodos(currentProject, handleEditTodo);
 }
 
 function main() {
     addProjectstoAside(projects, currentProject, handleSelectProject);
-    displayTodos(currentProject);
+    displayTodos(currentProject, handleEditTodo);
 
     addProject.addEventListener('click', () => {
         projectDialog.showModal();
@@ -53,6 +73,9 @@ function main() {
     cancelProject.addEventListener('click', () => {
         projectDialog.close();
     });
+    cancelEditTodo.addEventListener('click', () => {
+        editTodoDialog.close();
+    });
 
     projectForm.addEventListener('submit', (e) => {
         e.preventDefault();
@@ -60,7 +83,7 @@ function main() {
         projects.push(newProj);
         currentProject = newProj;
         addProjectstoAside(projects, currentProject, handleSelectProject);
-        displayTodos(currentProject);
+        displayTodos(currentProject, handleEditTodo);
         titleProject.value = '';
         projectDialog.close();
     });
@@ -80,9 +103,22 @@ function main() {
         );
         currentProject = targetProject || defaultProject;
         addProjectstoAside(projects, currentProject, handleSelectProject);
-        displayTodos(currentProject);
+        displayTodos(currentProject, handleEditTodo);
         todoForm.reset();
         todoDialog.close();
+    });
+
+    editTodoForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (todoBeingEdited) {
+            todoBeingEdited.setTitle(editTitleTodo.value);
+            todoBeingEdited.setDescription(editDescTodo.value);
+            todoBeingEdited.setDueDate(editDateTodo.value);
+            todoBeingEdited.setPriority(getPriority(editPriorityTodo));
+            displayTodos(currentProject, handleEditTodo);
+            todoBeingEdited = null;
+        }
+        editTodoDialog.close();
     });
 }
 

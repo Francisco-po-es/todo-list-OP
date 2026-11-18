@@ -28,7 +28,7 @@ export function addProjectstoAside(array, currentProject, onSelectProject) {
     }
 }
 
-export function displayTodos(project) {
+export function displayTodos(project, onEditTodo) {
     todosList.innerHTML = '';
 
     let header = document.createElement('h2');
@@ -61,7 +61,7 @@ export function displayTodos(project) {
         checkbox.checked = todo.status;
         checkbox.addEventListener('change', () => {
             todo.toggleStatus();
-            displayTodos(project);
+            displayTodos(project, onEditTodo);
         });
 
         let title = document.createElement('span');
@@ -78,14 +78,6 @@ export function displayTodos(project) {
         date.classList.add('todo-date');
         date.textContent = todo.dueDate;
 
-        let deleteBtn = document.createElement('button');
-        deleteBtn.textContent = 'Delete';
-        deleteBtn.classList.add('deleteBtn');
-        deleteBtn.addEventListener('click', () => {
-            project.removeTodo(todo.id);
-            displayTodos(project);
-        });
-
         let detailsDiv = document.createElement('div');
         detailsDiv.classList.add('todo-details', 'hidden');
 
@@ -95,13 +87,28 @@ export function displayTodos(project) {
         let priorityP = document.createElement('p');
         priorityP.textContent = `Priority: ${getPriorityName(todo.priority)}`;
 
+        let editBtn = document.createElement('button');
+        editBtn.textContent = 'Edit';
+        editBtn.addEventListener('click', () => {
+            onEditTodo(todo);
+        });
+
         detailsDiv.appendChild(descP);
         detailsDiv.appendChild(priorityP);
+        detailsDiv.appendChild(editBtn);
 
         let expandBtn = document.createElement('button');
         expandBtn.textContent = 'Details';
         expandBtn.addEventListener('click', () => {
             detailsDiv.classList.toggle('hidden');
+        });
+
+        let deleteBtn = document.createElement('button');
+        deleteBtn.textContent = 'Delete';
+        deleteBtn.classList.add('deleteBtn');
+        deleteBtn.addEventListener('click', () => {
+            project.removeTodo(todo.id);
+            displayTodos(project, onEditTodo);
         });
 
         rightGroup.appendChild(date);
