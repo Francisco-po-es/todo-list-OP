@@ -1,4 +1,4 @@
-import { format, parse, isValid } from 'date-fns';
+import { format, parse, isValid, isToday, isPast, isTomorrow ,formatDistanceToNow, endOfDay } from 'date-fns';
 
 // Parse a date to a Date Object and then make it readable for users
 export function formatDate(date) {
@@ -7,6 +7,23 @@ export function formatDate(date) {
         throw new Error('You have to choose a proper date');
     } else {
         return format(parsedDate, "dd 'of' MMMM yyyy");
+    }
+}
+
+// Describe todo's due date
+export function displayRemainingTime(date) {
+    // We use endOfDay function to establish current day and to make the distance add up
+    let parsedDate = endOfDay(parse(date, 'yyyy-MM-dd', new Date()));
+    if (!isValid(parsedDate)) {
+        throw new Error('You have to choose a proper date');
+    } else if (isToday(parsedDate)) {
+        return 'Today';
+    } else if (isTomorrow(parsedDate)) {
+        return 'Tomorrow';
+    } else if (isPast(parsedDate)) {
+        return 'Overdue';
+    } else {
+        return formatDistanceToNow(parsedDate, {addSuffix: true});
     }
 }
 
