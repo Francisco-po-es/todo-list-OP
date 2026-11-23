@@ -18,7 +18,7 @@ body {
     background-color: #e8e8e8;
     padding: 25px;
     display: grid;
-    grid-template-rows: auto 1fr;
+    grid-template-rows: auto auto 1fr;
     gap: 20px;
     border-right: 1px solid #ccc;
 }
@@ -46,7 +46,7 @@ button:hover {
 }
 
 #addProject,
-#addTodo {
+#addTodo, #removeProject {
     justify-self: start;
 }
 
