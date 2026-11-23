@@ -3,9 +3,11 @@ import { PROJECT } from './project.js';
 import { TODO } from './todo.js';
 import { addressProject, getPriority } from './tools.js';
 import { addProjectstoAside, displayTodos } from './DOM.js';
+import { saveProject } from "./storage.js";
 
 let defaultProject = new PROJECT('Default');
 const projects = [defaultProject];
+saveProject(projects);
 let currentProject = defaultProject;
 let todoBeingEdited = null;
 
@@ -92,6 +94,7 @@ function main() {
         e.preventDefault();
         let newProj = new PROJECT(titleProject.value);
         projects.push(newProj);
+        saveProject(projects);
         currentProject = newProj;
         addProjectstoAside(projects, currentProject, handleSelectProject);
         renderCurrentTodos();
