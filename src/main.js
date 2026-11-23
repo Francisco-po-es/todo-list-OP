@@ -41,11 +41,13 @@ let cancelTodo = document.getElementById('cancelTodo');
 
 function handleToggleTodo(todo) {
     todo.toggleStatus();
+    saveData(projects)
     renderCurrentTodos();
 }
 
 function handleDeleteTodo(todoId) {
     currentProject.removeTodo(todoId);
+    saveData(projects)
     renderCurrentTodos();
 }
 
