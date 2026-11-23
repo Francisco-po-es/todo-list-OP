@@ -3,7 +3,7 @@ import { PROJECT } from './project.js';
 import { TODO } from './todo.js';
 import { addressProject, getPriority } from './tools.js';
 import { addProjectstoAside, displayTodos } from './DOM.js';
-import { saveProject } from "./storage.js";
+import { deleteProject, saveProject } from "./storage.js";
 
 let defaultProject = new PROJECT('Default');
 const projects = [defaultProject];
@@ -21,6 +21,7 @@ let editTodoForm = document.querySelector('#dialogEditTodo > form');
 
 let addProject = document.getElementById('addProject');
 let cancelProject = document.getElementById('cancelProject');
+let removeProject = document.getElementById('removeProject');
 
 let titleProject = document.getElementById('inputTitlePJ');
 
@@ -101,6 +102,10 @@ function main() {
         titleProject.value = '';
         projectDialog.close();
     });
+
+    removeProject.addEventListener('click', () => {
+        deleteProject(currentProject.id);
+    })
 
     todoForm.addEventListener('submit', (e) => {
         e.preventDefault();
