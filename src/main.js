@@ -141,6 +141,7 @@ function main() {
             todoBeingEdited = null;
         }
         editTodoDialog.close();
+        saveData(projects);
     });
 }
 
