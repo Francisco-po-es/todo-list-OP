@@ -24,6 +24,7 @@ export function addProjectstoAside(array, currentProject, onSelectProject) {
         listProjects.innerHTML = '';
         array.forEach((project) => displayProjects(project, currentProject, onSelectProject));
     } else {
+        listProjects.innerHTML = '';
         todosList.innerHTML = `There's no projects in here.`;
     }
 }

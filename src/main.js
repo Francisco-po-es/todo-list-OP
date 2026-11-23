@@ -104,7 +104,12 @@ function main() {
     });
 
     removeProject.addEventListener('click', () => {
-        deleteProject(currentProject.id);
+        // We eliminte that project
+        deleteProject(projects, currentProject.id);
+        // We save the current list of projects
+        saveProject(projects)
+        // We update projects display
+        addProjectstoAside(projects, projects[0], handleSelectProject);
     })
 
     todoForm.addEventListener('submit', (e) => {
