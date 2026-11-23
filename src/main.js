@@ -3,11 +3,11 @@ import { PROJECT } from './project.js';
 import { TODO } from './todo.js';
 import { addressProject, getPriority } from './tools.js';
 import { addProjectstoAside, displayTodos } from './DOM.js';
-import { deleteProject, saveProject } from "./storage.js";
+import { deleteProject, saveData } from "./storage.js";
 
 let defaultProject = new PROJECT('Default');
 const projects = [defaultProject];
-saveProject(projects);
+saveData(projects);
 let currentProject = defaultProject;
 let todoBeingEdited = null;
 
@@ -95,7 +95,7 @@ function main() {
         e.preventDefault();
         let newProj = new PROJECT(titleProject.value);
         projects.push(newProj);
-        saveProject(projects);
+        saveData(projects);
         currentProject = newProj;
         addProjectstoAside(projects, currentProject, handleSelectProject);
         renderCurrentTodos();
@@ -107,7 +107,7 @@ function main() {
         // We eliminte that project
         deleteProject(projects, currentProject.id);
         // We save the current list of projects
-        saveProject(projects)
+        saveData(projects)
         // We update projects display
         addProjectstoAside(projects, projects[0], handleSelectProject);
     })
@@ -125,6 +125,7 @@ function main() {
             defaultProject
         );
         renderCurrentTodos();
+        saveData(projects);
         todoForm.reset();
         todoDialog.close();
     });
